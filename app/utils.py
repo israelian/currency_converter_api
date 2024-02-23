@@ -1,5 +1,6 @@
 import httpx
 
+
 async def fetch_exchange_rates(api_key: str) -> dict:
     url = f"http://api.exchangeratesapi.io/v1/latest?access_key={api_key}"
     async with httpx.AsyncClient() as client:
