@@ -55,7 +55,8 @@ def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
 
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv("DATABASE_URL")
+    configuration["sqlalchemy.url"] = os.getenv(
+        "DATABASE_URL").replace("asyncpg", "psycopg2")
 
     connectable = engine_from_config(
         configuration,
