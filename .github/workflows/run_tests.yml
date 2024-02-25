@@ -42,7 +42,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Apply database migrations
       run: |
-        DATABASE_URL="postgresql+asyncpg://youruser:yourpassword@localhost:5432/yourdb" alembic upgrade head
+        DATABASE_URL="postgresql+psycopg2://youruser:yourpassword@localhost:5432/yourdb" alembic upgrade head
+
     - name: Run tests
       env:
         DATABASE_URL: "postgresql+asyncpg://youruser:yourpassword@localhost:5432/yourdb"
