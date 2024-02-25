@@ -22,6 +22,7 @@ services:
     depends_on:
       - db
     environment:
+      PYTHONPATH: "/usr/src/app"
       DATABASE_URL: "postgresql+asyncpg://youruser:yourpassword@db/yourdb"
 volumes:
   postgres_data:

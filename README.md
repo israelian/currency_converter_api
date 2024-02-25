@@ -67,7 +67,7 @@ Example: `localhost:8000/convert?source=AMD&target=USD&amount=500`
 To run the automated tests for the application, use the following command:
 
 ```bash
-docker-compose exec web pytest .tests.py
+docker-compose exec web pytest tests/
 ```
 
 ## Stopping the Application

@@ -8,11 +8,21 @@ from sqlalchemy.future import select
 from .utils import fetch_exchange_rates
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from contextlib import asynccontextmanager
 
 
 load_dotenv()
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Logic before app starts (e.g., database initialization)
+    await models.async_init_db()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+
 
 EXCHANGE_API_KEY = os.getenv("EXCHANGE_API_KEY")
 
@@ -23,11 +33,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-async def startup_event():
-    await models.async_init_db()
 
 
 @app.post("/update-rates/")

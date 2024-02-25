@@ -1,9 +1,10 @@
 import os
 from sqlalchemy import Column, String, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
+from sqlalchemy.pool import NullPool
 
 
 Base = declarative_base()
@@ -22,7 +23,11 @@ class Currency(Base):
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=True,
+    poolclass=NullPool,
+)
 
 async_session = sessionmaker(
     autocommit=False, autoflush=False, bind=engine, class_=AsyncSession
