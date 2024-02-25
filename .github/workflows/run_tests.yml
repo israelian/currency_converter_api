@@ -28,5 +28,6 @@ jobs:
     - name: Run tests
       env:
         DATABASE_URL: "postgresql+asyncpg://youruser:yourpassword@db/yourdb"
+        EXCHANGE_API_KEY: ${{ secrets.EXCHANGE_API_KEY }}
       run: |
         pytest
