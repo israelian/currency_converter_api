@@ -1,4 +1,4 @@
-name: Python application test
+name: Python Application Test
 
 on:
   push:
@@ -41,14 +41,12 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Apply database migrations
-      env:
-        DATABASE_URL: "postgresql+asyncpg://youruser:yourpassword@localhost:5432/yourdb"
       run: |
-        alembic upgrade head
-
+        DATABASE_URL="postgresql+asyncpg://youruser:yourpassword@localhost:5432/yourdb" alembic upgrade head
     - name: Run tests
       env:
         DATABASE_URL: "postgresql+asyncpg://youruser:yourpassword@localhost:5432/yourdb"
         EXCHANGE_API_KEY: ${{ secrets.EXCHANGE_API_KEY }}
       run: |
+        echo $DATABASE_URL
         pytest
